@@ -21,9 +21,9 @@ import javax.persistence.OneToMany
 @Entity
 data class Account(
         @Id
-        @GeneratedValue(generator = "UUID")
-        @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-        val id: String?,
+        @GeneratedValue(generator = "UUID") //tahmin edilemeyen ıd olsun.uuid hascode üretilir istek üretilirse her seferinde farklı id oluşturur
+        @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator") //uuidyi çalıştıracak kod
+        val id: String?,// soru işareti boş da olabilir demek
         val balance:BigDecimal?=BigDecimal.ZERO,
         val creationDate: LocalDateTime,
 
@@ -32,5 +32,8 @@ data class Account(
         val customer : Customer?,
 
         @OneToMany(mappedBy = "account" , fetch = FetchType.LAZY)
-        val transaction: Set<Transaction>,
+        val transaction: Set<Transaction>?
 )
+{
+
+}
