@@ -14,7 +14,7 @@ data class Transaction(
     val id: String?,// soru işareti boş da olabilir demek
 
     val transactionType: TransactionType ?= TransactionType.INITAL,
-    val amount: BigDecimal?,
+    val amount: BigDecimal?,//parasal işlemlerde BigDecimal ile daha çok veri elde tutulabilir
     val transactionDate: LocalDateTime?,
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = [CascadeType.ALL])
@@ -23,10 +23,10 @@ data class Transaction(
 ) {
 
 
-    constructor(amount: BigDecimal, transactionDate: LocalDateTime, account: Account) : this(
+    constructor(amount: BigDecimal,  account: Account) : this(
         id = null,
         amount = amount,
-        transactionDate = transactionDate,
+        transactionDate = LocalDateTime.now(),
         transactionType = TransactionType.INITAL,
         account = account
     )

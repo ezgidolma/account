@@ -1,39 +1,60 @@
 package com.folksdev.account.model
 
-import org.hibernate.annotations.Cascade
-import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.GenericGenerator
-import org.hibernate.annotations.ManyToAny
 import java.math.BigDecimal
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.Date
-import javax.persistence.CascadeType
-import javax.persistence.Entity
-import javax.persistence.FetchType
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
-import javax.persistence.OneToMany
+import javax.persistence.*
 
 
 @Entity
 data class Account(
+
         @Id
-        @GeneratedValue(generator = "UUID") //tahmin edilemeyen ıd olsun.uuid hascode üretilir istek üretilirse her seferinde farklı id oluşturur
-        @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator") //uuidyi çalıştıracak kod
-        val id: String?,// soru işareti boş da olabilir demek
-        val balance:BigDecimal?=BigDecimal.ZERO,
+        @GeneratedValue(generator = "UUID")
+        @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+        val id: String? = "",
+        val balance: BigDecimal? = BigDecimal.ZERO,
         val creationDate: LocalDateTime,
+
 
         @ManyToOne(fetch = FetchType.LAZY , cascade = [CascadeType.ALL])
         @JoinColumn(name = "customer_id", nullable = false)
         val customer : Customer?,
 
         @OneToMany(mappedBy = "account" , fetch = FetchType.LAZY)
-        val transaction: Set<Transaction>?
+        val transaction: Set<Transaction> = HashSet()
+
 )
 {
+        constructor(customer: Customer, balance: BigDecimal, creationDate: LocalDateTime) : this(
+                "",
+                customer = customer,
+                balance = balance,
+                creationDate = creationDate,
+
+        )
+
+        override fun equals(other: Any?): Boolean {
+                if (this === other) return true
+                if (javaClass != other?.javaClass) return false
+
+                other as Account
+
+                if (id != other.id) return false
+                if (balance != other.balance) return false
+                if (creationDate != other.creationDate) return false
+                if (customer != other.customer) return false
+
+                return true
+        }
+
+        override fun hashCode(): Int {
+                var result = id?.hashCode() ?: 0
+                result = 31 * result + (balance?.hashCode() ?: 0)
+                result = 31 * result + creationDate.hashCode()
+                result = 31 * result + (customer?.hashCode() ?: 0)
+                return result
+        }
+
 
 }
