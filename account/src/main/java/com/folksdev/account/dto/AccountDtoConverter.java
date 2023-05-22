@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
-public class AccountDtoConverter {
+public class AccountDtoConverter { //Test etmesi daha kolay
 
     private final CustomerDtoConverter customerDtoConverter;
     private final TransactionDtoConverter transactionDtoConverter;
