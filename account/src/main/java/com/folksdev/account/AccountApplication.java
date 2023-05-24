@@ -11,7 +11,7 @@ import java.util.HashSet;
 @SpringBootApplication
 public class AccountApplication implements CommandLineRunner {
 
-	private  final CustomerRepository customerRepository;
+	private final CustomerRepository customerRepository;
 
 	public AccountApplication(CustomerRepository customerRepository) {
 		this.customerRepository = customerRepository;
@@ -23,7 +23,7 @@ public class AccountApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args)  {
-	Customer customer=customerRepository.save(new Customer("","Hüseyin","Genç",new HashSet<>()));
+	Customer customer=customerRepository.save(new Customer("","Huseyin","bler",new HashSet<>()));
 		System.out.println(customer);
 	}
 }

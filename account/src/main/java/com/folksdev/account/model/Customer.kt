@@ -24,8 +24,7 @@ data class Customer(
     ){
 
 
-
-    override fun equals(other: Any?): Boolean { // değerleri eşit mi diye bakıyor.
+    override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
@@ -37,10 +36,11 @@ data class Customer(
         return accounts == other.accounts
     }
 
-    override fun hashCode(): Int { //özel bir algoritma
+    override fun hashCode(): Int {
         var result = id?.hashCode() ?: 0
         result = 31 * result + (name?.hashCode() ?: 0)
         result = 31 * result + (surname?.hashCode() ?: 0)
+        result = 31 * result + accounts.hashCode()
         return result
     }
 }
