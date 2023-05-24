@@ -18,10 +18,13 @@ data class Customer(
     val name: String?,
     val surname: String?,
 
-    @OneToMany(mappedBy = "customer" , fetch = FetchType.LAZY)
-    val accounts: Set<Account>?
+    @OneToMany(mappedBy = "customer" , fetch = FetchType.EAGER)
+    val accounts: Set<Account>
 
     ){
+
+
+
     override fun equals(other: Any?): Boolean { // değerleri eşit mi diye bakıyor.
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
